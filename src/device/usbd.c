@@ -1048,7 +1048,8 @@ static bool process_get_descriptor(uint8_t rhport, tusb_control_request_t const 
       TU_LOG_USBD(" String[%u]\r\n", desc_index);
 
       // String Descriptor always uses the desc set from user
-      uint8_t const* desc_str = (uint8_t const*) tud_descriptor_string_cb(desc_index, tu_le16toh(p_request->wIndex));
+      // This is modified to send the wLength request though with it, this is not standard TinyUSB
+      uint8_t const* desc_str = (uint8_t const*) tud_descriptor_string_cb(desc_index, tu_le16toh(p_request->wIndex), p_request->wLength);
       TU_VERIFY(desc_str);
 
       // first byte of descriptor is its size
